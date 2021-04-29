@@ -15,31 +15,41 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="ツイート読み上げ太郎">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="tweet_read_man">
+  <meta name="apple-mobile-web-app-title" content="ツイート読み上げ太郎">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>tweet_read_man</title>
+  <title>ツイート読み上げ太郎</title>
   <link rel="manifest" href="manifest.json">
 
   <script defer>
+    function checkWord(string){
+      ban_words = {'草': 'くさ', 'w': 'わら'}
+      for(let key in ban_words){
+        string.replace(key,ban_words[key]);
+      }
+
+      return string;
+    }
     function speak(tweets){
+      console.error('hey');
       json = JSON.parse(tweets);
 
       for (i=0;i<json.length;i++){
-        console.log(json[i]);
         // 発言を作成
-        uttr = new SpeechSynthesisUtterance(json[i]);
+        word = checkWord(json[i]);
+        uttr = new SpeechSynthesisUtterance(word);
         // 発言を再生 (発言キューに発言を追加)
         speechSynthesis.speak(uttr);
       }
+
     }
   </script>
 </head>
@@ -50,11 +60,11 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('flutter-first-frame', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js?v=414335655');
+        navigator.serviceWorker.register('flutter_service_worker.js?v=1073235368');
       });
     }
   </script>
 
-  <script src="tweet_read_man/main.dart.js" type="application/javascript"></script>
+  <script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>
